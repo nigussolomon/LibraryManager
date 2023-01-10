@@ -24,19 +24,22 @@ class RegFrame extends Base implements ActionListener {
         this.passField = new JPasswordField();
         this.passField.setBounds(20, 150, 450, 30);
 
+        JCheckBox check = new JCheckBox("I have agreed to the Terms and Conditions.", true);
+        check.setBounds(16, 180, 300, 30);
+
         this.reg = new JButton("REGISTER");
-        this.reg.setBounds(20, 200, 100, 30);
+        this.reg.setBounds(20, 220, 100, 30);
 
         JLabel or = new JLabel("OR");
-        or.setBounds(130, 200, 150, 30);
+        or.setBounds(130, 220, 150, 30);
 
         this.login = new JButton("GO TO LOGIN");
-        this.login.setBounds(157, 200, 150, 30);
+        this.login.setBounds(157, 220, 150, 30);
         this.login.addActionListener(this);
 
-        JComponent[] components = { title, userLabel, this.userField, passLabel, this.passField, this.login, or, this.reg };
+        JComponent[] components = { title, userLabel, this.userField, passLabel, this.passField, check ,this.login, or, this.reg };
         super.addComp(components, regFrame);
-        super.init(500, 350, regFrame);
+        super.init(500, 300, regFrame);
     }
 
     @Override

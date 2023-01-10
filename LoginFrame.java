@@ -26,6 +26,7 @@ class LoginFrame extends Base implements ActionListener {
 
         this.login = new JButton("LOGIN");
         this.login.setBounds(20, 210, 100, 40);
+        this.login.addActionListener(this);
 
         JLabel or = new JLabel("OR");
         or.setBounds(130, 210, 150, 40);
@@ -45,6 +46,17 @@ class LoginFrame extends Base implements ActionListener {
             super.loginFrame.setVisible(false);
             RegFrame rg = new RegFrame();
             rg.init();
+        } else if (e.getSource() == login){
+            User user = new User();
+            user.setUsername(userField.getText());
+            user.setPassword(passField.getPassword());
+            boolean pass = Service.auth(user);
+            if (pass) {
+                JOptionPane.showMessageDialog(regFrame, "Succesfully Logged in", "Success", JOptionPane.INFORMATION_MESSAGE);
+                super.loginFrame.setVisible(false);
+            } else{
+                JOptionPane.showMessageDialog(regFrame, "Wrong credentials, try again", "Unable to Login", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
     }

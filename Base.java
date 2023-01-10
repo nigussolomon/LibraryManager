@@ -5,10 +5,6 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 public class Base {
     JFrame regFrame = new JFrame();
     JFrame loginFrame = new JFrame();
-    JTextField userField;
-    JPasswordField passField;
-    JButton login;
-    JButton reg;
 
     public static void init(Integer width, Integer height, JFrame frame) {
         frame.setTitle("Ethio Library");

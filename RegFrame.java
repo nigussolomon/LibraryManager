@@ -29,6 +29,7 @@ class RegFrame extends Base implements ActionListener {
 
         this.reg = new JButton("REGISTER");
         this.reg.setBounds(20, 230, 100, 40);
+        this.reg.addActionListener(this);
 
         JLabel or = new JLabel("OR");
         or.setBounds(130, 230, 150, 40);
@@ -42,13 +43,25 @@ class RegFrame extends Base implements ActionListener {
         super.init(500, 320, regFrame);
     }
 
+    public void userObject(){
+        
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == login) {
             super.regFrame.setVisible(false);
             LoginFrame lg = new LoginFrame();
             lg.init();
+        } else if (e.getSource() == this.reg){
+            User user = new User();
+            user.setUsername(userField.getText());
+            user.setPassword(passField.getPassword());
+            Service.RegisterService(user);
+            JOptionPane.showMessageDialog(regFrame, "Succesfully Registered as @" + user.getUsername(), "Success", JOptionPane.INFORMATION_MESSAGE);
+            super.regFrame.setVisible(false);
+            LoginFrame lg = new LoginFrame();
+            lg.init();
         }
-
     }
 }

@@ -11,6 +11,7 @@ public class Base {
         frame.setSize(width, height);
         frame.setResizable(false);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

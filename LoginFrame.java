@@ -54,6 +54,8 @@ class LoginFrame extends Base implements ActionListener {
             if (pass) {
                 JOptionPane.showMessageDialog(regFrame, "Succesfully Logged in", "Success", JOptionPane.INFORMATION_MESSAGE);
                 super.loginFrame.setVisible(false);
+                Home home = new Home();
+                home.init(user.getUsername());
             } else{
                 JOptionPane.showMessageDialog(regFrame, "Wrong credentials, try again", "Unable to Login", JOptionPane.ERROR_MESSAGE);
             }

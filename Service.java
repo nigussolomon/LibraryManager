@@ -7,9 +7,13 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@SuppressWarnings("unchecked")
+
 public class Service implements Serializable {
     static File credentials = new File("credentials.obj");
+    static File booksFile = new File("books.obj");
     private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>();
 
     public static void WriteObjectToFile(Object serObj, String file) {
         try {
@@ -47,6 +51,20 @@ public class Service implements Serializable {
         }
     }
 
+    public static ArrayList<Book> READ_BOOK_OBJ(String filepath) {
+
+        try {
+            FileInputStream fileIn = new FileInputStream(filepath);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            ArrayList<Book> book = (ArrayList<Book>) objectIn.readObject();
+            objectIn.close();
+            return book;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public static boolean auth(User user) {
         users = READ_CRED_OBJ(credentials.getName());
         boolean Success = false;
@@ -58,5 +76,16 @@ public class Service implements Serializable {
             }
         }
         return Success;
+    }
+
+    public static void add_book(Book book) {
+        if (booksFile.exists() == false) {
+            books.add(book);
+            WriteObjectToFile(books, booksFile.getName());
+        } else {
+            books = READ_BOOK_OBJ(booksFile.getName());
+            books.add(book);
+            WriteObjectToFile(books, booksFile.getName());
+        }
     }
 }

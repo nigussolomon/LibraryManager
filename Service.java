@@ -60,7 +60,7 @@ public class Service implements Serializable {
             objectIn.close();
             return book;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            // ex.printStackTrace();
             return null;
         }
     }

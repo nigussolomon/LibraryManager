@@ -28,14 +28,14 @@ class Home extends LibraryManager implements ActionListener {
     private JPanel new_panel;
     private JPanel panel1;
     private JTextField titleField;
-    private JComboBox cb;
-    private JComboBox cb1;
+    private JComboBox<String> cb;
+    private JComboBox<String> cb1;
     private JTable jt;
     private JScrollPane sp;
 
     public void TABLE(JPanel panel) {
         jt = new JTable(new DefaultTableModel(new Object[] { "Title", "Category", "Status" }, 0));
-        DefaultTableModel model = (DefaultTableModel) jt.getModel();
+        DefaultTableModel model = (DefaultTableModel) jt.getModel();    
         if (Service.READ_BOOK_OBJ("books.obj") == null) {
 
         } else {
@@ -43,7 +43,7 @@ class Home extends LibraryManager implements ActionListener {
                 model.addRow(new Object[] { obj.getTitle(), obj.getCategory(), obj.getStatus() });
             }
         }
-
+        jt.setEnabled(false);
         sp = new JScrollPane(jt);
         panel.add(sp);
     }
@@ -133,10 +133,10 @@ class Home extends LibraryManager implements ActionListener {
         titleField = new JTextField();
         JLabel catLabel = new JLabel("CATEGORY");
         String cats[] = { "Programing", "Data Science", "Statistics" };
-        cb = new JComboBox(cats);
+        cb = new JComboBox<>(cats);
         JLabel statLabel = new JLabel("STATUS");
         String stats[] = { "NEW", "USED", "ELECTRONIC" };
-        cb1 = new JComboBox(stats);
+        cb1 = new JComboBox<>(stats);
 
         subBook = new JButton("SUBMIT");
         subBook.setBackground(Color.BLUE);

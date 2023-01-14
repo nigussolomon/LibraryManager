@@ -28,19 +28,21 @@ class Home extends LibraryManager implements ActionListener {
     private JPanel new_panel;
     private JPanel panel1;
     private JTextField titleField;
+    private JTextField dateField;
     private JComboBox<String> cb;
     private JComboBox<String> cb1;
     private JTable jt;
     private JScrollPane sp;
+    
 
     public void TABLE(JPanel panel) {
-        jt = new JTable(new DefaultTableModel(new Object[] { "Title", "Category", "Status" }, 0));
+        jt = new JTable(new DefaultTableModel(new Object[] { "Title", "Category", "Status", "Published Date", "Loned" }, 0));
         DefaultTableModel model = (DefaultTableModel) jt.getModel();    
         if (Service.READ_BOOK_OBJ("books.obj") == null) {
 
         } else {
             for (Book obj : Service.READ_BOOK_OBJ("books.obj")) {
-                model.addRow(new Object[] { obj.getTitle(), obj.getCategory(), obj.getStatus() });
+                model.addRow(new Object[] { obj.getTitle(), obj.getCategory(), obj.getStatus(), obj.getDate_published(), obj.isLoaned() });
             }
         }
         jt.setEnabled(false);
@@ -137,6 +139,8 @@ class Home extends LibraryManager implements ActionListener {
         JLabel statLabel = new JLabel("STATUS");
         String stats[] = { "NEW", "USED", "ELECTRONIC" };
         cb1 = new JComboBox<>(stats);
+        JLabel dateLabel = new JLabel("PUBLISHED DATE");
+        dateField = new JTextField();
 
         subBook = new JButton("SUBMIT");
         subBook.setBackground(Color.BLUE);
@@ -149,6 +153,8 @@ class Home extends LibraryManager implements ActionListener {
         new_panel.add(cb);
         new_panel.add(statLabel);
         new_panel.add(cb1);
+        new_panel.add(dateLabel);
+        new_panel.add(dateField);
         new_panel.add(subBook);
         new_panel.setVisible(false);
 
@@ -186,6 +192,8 @@ class Home extends LibraryManager implements ActionListener {
             book.setTitle(titleField.getText());
             book.setCategory(cb.getSelectedItem().toString());
             book.setStatus(cb1.getSelectedItem().toString());
+            book.setDate_published(dateField.getText());
+            book.setLoaned(false);
             Service.add_book(book);
             panel1.remove(sp);
             TABLE(panel1);

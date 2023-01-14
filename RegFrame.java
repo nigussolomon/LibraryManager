@@ -7,6 +7,8 @@ class RegFrame extends Base implements ActionListener {
     private JPasswordField passField;
     private JButton login;
     private JButton reg;
+    boolean validUsername = false;
+    boolean validPassword = false;
 
     public void init() {
         JLabel title = new JLabel("REGISTER NOW");
@@ -38,13 +40,14 @@ class RegFrame extends Base implements ActionListener {
         this.login.setBounds(160, 230, 150, 40);
         this.login.addActionListener(this);
 
-        JComponent[] components = { title, userLabel, this.userField, passLabel, this.passField, check ,this.login, or, this.reg };
+        JComponent[] components = { title, userLabel, this.userField, passLabel, this.passField, check, this.login, or,
+                this.reg };
         super.addComp(components, regFrame);
         super.init(500, 320, regFrame);
     }
 
-    public void userObject(){
-        
+    public void userObject() {
+
     }
 
     @Override
@@ -53,15 +56,32 @@ class RegFrame extends Base implements ActionListener {
             super.regFrame.setVisible(false);
             LoginFrame lg = new LoginFrame();
             lg.init();
-        } else if (e.getSource() == this.reg){
-            User user = new User();
-            user.setUsername(userField.getText());
-            user.setPassword(passField.getPassword());
-            Service.RegisterService(user);
-            JOptionPane.showMessageDialog(regFrame, "Succesfully Registered as @" + user.getUsername(), "Success", JOptionPane.INFORMATION_MESSAGE);
-            super.regFrame.setVisible(false);
-            LoginFrame lg = new LoginFrame();
-            lg.init();
+        } else if (e.getSource() == this.reg) {
+            if (userField.getText() != " " && userField.getText().length() > 4) {
+                validUsername = true;
+            } else {
+                JOptionPane.showMessageDialog(regFrame, "Usernames must have atleast 5 characters", "Invalid Username",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+            if (passField.getPassword().length >= 8) {
+                validPassword = true;
+            } else {
+                JOptionPane.showMessageDialog(regFrame, "Password must have atleast 8 characters", "Invalid Password",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+            if (validPassword && validUsername) {
+                User user = new User();
+                user.setUsername(userField.getText());
+                user.setPassword(passField.getPassword());
+                Service.RegisterService(user);
+                JOptionPane.showMessageDialog(regFrame, "Succesfully Registered as @" + user.getUsername(), "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+                super.regFrame.setVisible(false);
+                LoginFrame lg = new LoginFrame();
+                lg.init();
+            }
         }
     }
 }

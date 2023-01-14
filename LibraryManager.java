@@ -23,10 +23,13 @@ class Home extends LibraryManager implements ActionListener {
     private JButton newBook;
     private JButton listBook;
     private JButton subBook;
+    private JButton loanBook;
+    private JButton listLoans;
     private JTabbedPane tabbedPane2;
     private JTabbedPane tabbedPane1;
     private JPanel new_panel;
     private JPanel panel1;
+    private JPanel panel2;
     private JTextField titleField;
     private JTextField dateField;
     private JComboBox<String> cb;
@@ -67,18 +70,32 @@ class Home extends LibraryManager implements ActionListener {
         logout.addActionListener(this);
 
         listBook = new JButton("LIST BOOKS");
-        listBook.setBounds(20, 60, 180, 35);
+        listBook.setBounds(20, 60, 120, 35);
         listBook.setBackground(Color.DARK_GRAY);
         listBook.setForeground(Color.WHITE);
         listBook.setEnabled(false);
         listBook.addActionListener(this);
 
         newBook = new JButton("NEW BOOK");
-        newBook.setBounds(210, 60, 180, 35);
+        newBook.setBounds(150, 60, 120, 35);
         newBook.setBackground(Color.DARK_GRAY);
         newBook.setForeground(Color.WHITE);
         newBook.setEnabled(true);
         newBook.addActionListener(this);
+
+        loanBook = new JButton("ADD LOAN");
+        loanBook.setBounds(280, 60, 120, 35);
+        loanBook.setBackground(Color.DARK_GRAY);
+        loanBook.setForeground(Color.WHITE);
+        loanBook.setEnabled(true);
+        loanBook.addActionListener(this);
+
+        listLoans = new JButton("LIST LOANS");
+        listLoans.setBounds(410, 60, 120, 35);
+        listLoans.setBackground(Color.DARK_GRAY);
+        listLoans.setForeground(Color.WHITE);
+        listLoans.setEnabled(true);
+        listLoans.addActionListener(this);
 
         tabbedPane1 = new JTabbedPane();
         tabbedPane1.setBounds(20, 100, 735, 260);
@@ -87,9 +104,14 @@ class Home extends LibraryManager implements ActionListener {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         panel1.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+        panel2.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         TABLE(panel1);
 
         tabbedPane1.add("| BOOKS", panel1);
+        tabbedPane1.add("| LOANS", panel2);
 
         tabbedPane2 = new JTabbedPane();
         tabbedPane2.setBounds(20, 400, 735, 125);
@@ -158,7 +180,7 @@ class Home extends LibraryManager implements ActionListener {
         new_panel.add(subBook);
         new_panel.setVisible(false);
 
-        JComponent[] components = { activeUser, title, logout, newBook, listBook, tabbedPane1, tabbedPane2, new_panel };
+        JComponent[] components = { activeUser, title, logout, newBook, listBook, loanBook ,tabbedPane1, tabbedPane2, new_panel, listLoans };
         addComp(components, window);
         init(800, 600, window);
     }
@@ -174,13 +196,17 @@ class Home extends LibraryManager implements ActionListener {
             tabbedPane1.setVisible(false);
             tabbedPane2.setVisible(false);
             listBook.setEnabled(true);
+            loanBook.setEnabled(true);
             newBook.setEnabled(false);
+            listLoans.setEnabled(true);
             new_panel.setVisible(true);
         } else if (e.getSource() == listBook) {
             tabbedPane1.setVisible(true);
             tabbedPane2.setVisible(true);
             listBook.setEnabled(false);
             newBook.setEnabled(true);
+            loanBook.setEnabled(true);
+            listLoans.setEnabled(true);
             new_panel.setVisible(false);
         } else if (e.getSource() == subBook) {
             tabbedPane1.setVisible(true);
@@ -197,6 +223,22 @@ class Home extends LibraryManager implements ActionListener {
             Service.add_book(book);
             panel1.remove(sp);
             TABLE(panel1);
+        } else if (e.getSource() == loanBook){
+            newBook.setEnabled(true);
+            listBook.setEnabled(true);
+            listLoans.setEnabled(true);
+            loanBook.setEnabled(false);
+            tabbedPane1.setVisible(false);
+            tabbedPane2.setVisible(false);
+            new_panel.setVisible(false);
+        } else if (e.getSource() == listLoans){
+            newBook.setEnabled(true);
+            listBook.setEnabled(true);
+            loanBook.setEnabled(true);
+            listLoans.setEnabled(false);
+            new_panel.setVisible(false);
+            tabbedPane1.setVisible(false);
+            tabbedPane2.setVisible(false);
         }
 
     }

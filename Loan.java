@@ -1,4 +1,6 @@
-public class Loan {
+import java.io.Serializable;
+
+public class Loan implements Serializable{
     private String first_name;
     private String last_name;
     private String Programme;

@@ -12,8 +12,10 @@ import java.util.Arrays;
 public class Service implements Serializable {
     static File credentials = new File("credentials.obj");
     static File booksFile = new File("books.obj");
+    static File loansFile = new File("loans.obj");
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
+    private static ArrayList<Loan> loans = new ArrayList<>();
 
     public static void WriteObjectToFile(Object serObj, String file) {
         try {
@@ -65,6 +67,20 @@ public class Service implements Serializable {
         }
     }
 
+    public static ArrayList<Loan> READ_LOAN_OBJ(String filepath) {
+
+        try {
+            FileInputStream fileIn = new FileInputStream(filepath);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            ArrayList<Loan> loan = (ArrayList<Loan>) objectIn.readObject();
+            objectIn.close();
+            return loan;
+        } catch (Exception ex) {
+            // ex.printStackTrace();
+            return null;
+        }
+    }
+
     public static boolean auth(User user) {
         users = READ_CRED_OBJ(credentials.getName());
         boolean Success = false;
@@ -86,6 +102,17 @@ public class Service implements Serializable {
             books = READ_BOOK_OBJ(booksFile.getName());
             books.add(book);
             WriteObjectToFile(books, booksFile.getName());
+        }
+    }
+
+    public static void add_loan(Loan loan) {
+        if (loansFile.exists() == false) {
+            loans.add(loan);
+            WriteObjectToFile(loans, loansFile.getName());
+        } else {
+            loans = READ_LOAN_OBJ(loansFile.getName());
+            loans.add(loan);
+            WriteObjectToFile(loans, loansFile.getName());
         }
     }
 }

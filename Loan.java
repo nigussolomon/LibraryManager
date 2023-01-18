@@ -4,7 +4,7 @@ public class Loan implements Serializable{
     private String first_name;
     private String last_name;
     private String Programme;
-    Book loaned_book;
+    private String loaned_book;
     
     public String getFirst_name() {
         return first_name;
@@ -24,12 +24,11 @@ public class Loan implements Serializable{
     public void setProgramme(String programme) {
         Programme = programme;
     }
-    public Book getLoaned_book() {
+    public String getLoaned_book() {
         return loaned_book;
     }
-    public void setLoaned_book(Book loaned_book) {
+    public void setLoaned_book(String loaned_book) {
         this.loaned_book = loaned_book;
     }
-
     
 }
